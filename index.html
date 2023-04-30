@@ -12,10 +12,18 @@
 
 <body>
   <div class="calculator">
-    <input type="text" class="num1"> +
+    <input type="text" class="num1">
+    <!-- + -->
+    <label for="signs">Выберите знак:</label>
+    <select class="signs">
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+    </select>
     <input type="text" class="num2">
     <button type="button" class="btnRun">=</button>
-    <span class="result"></span>
+    <div class="result"></div>
   </div>
 </body>
 
