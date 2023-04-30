@@ -30,21 +30,17 @@ window.addEventListener("load", function () {
     const n2 = Number(num2.value);
     const op = signs.value;
     let res;
-    switch (op) {
-      case "+":
-        res = n1 + n2;
-        break;
-      case "-":
-        res = n1 - n2;
-        break;
-      case "*":
-        res = n1 * n2;
-        break;
-      case "/":
+    if (op === "+") res = n1 + n2;
+    else if (op === "-") res = n1 - n2;
+    else if (op === "*") res = n1 * n2;
+    else if (op === "/")
+      if (n2 === "0") {
+        res = undefined;
+      } else {
         res = n1 / n2;
-        break;
-    }
-    result.textContent = `Результат: ${res}`;
+      }
+
+    result.textContent = `Результат: ${res ?? "деление на ноль запрещено"}`;
     btnRun.disabled = true;
   });
 });
