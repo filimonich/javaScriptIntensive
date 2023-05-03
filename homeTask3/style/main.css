@@ -3,11 +3,19 @@ body {
   margin: 0;
 }
 
-.calculator {
-  margin: 20px;
+.form {
+  background-color: aquamarine;
+  width: 300px;
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .error-message {
-  /* display: none; */
   color: brown;
+}
+
+.err {
+  outline: 2px solid red;
 }

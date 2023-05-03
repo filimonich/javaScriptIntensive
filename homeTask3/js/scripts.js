@@ -1,80 +1,65 @@
-// Добавляем обработчик события "submit" для первой формы на странице
 document.forms[0].addEventListener("submit", function (e) {
-  e.preventDefault();
-  // Получаем все элементы с классом "check"
-  let inputs = document.querySelectorAll(".check");
+  let inputs = document.querySelectorAll(".check-error");
   let form = document.querySelector(".form");
-  // Флаг для проверки пустых полей
   let emptyErr = false;
 
   const validation = {
-    name: function (input) {
-      return !/^[a-zA-Zа-яА-Я]{2,}$/.test(input.value);
-    },
-    phone: function (input) {
-      return !/^\d+$/.test(input.value);
-    },
-    email: function (input) {
-      return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.value);
-    },
+    name: (input) => !/^[a-zA-Zа-яА-Я]{2,}$/.test(input.value),
+    phone: (input) => !/^(\+\d{1,3}[- ]?)?\d{10}$/.test(input.value),
+    email: (input) =>
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.value),
   };
 
   const errorMessages = {
     name: "Имя должно содержать больше двух символов и только буквы",
-    phone: "Телефон должен содержать только цифры",
+    phone: "Телефон только в таком формате +79991112200",
     email: "Некорректный адрес электронной почты",
   };
 
   inputs.forEach(function (input) {
-    // Если значение поля пустое
     if (input.value === "") {
-      // Добавляем класс "err"
       input.classList.add("err");
-      // Устанавливаем флаг в true
       emptyErr = true;
     } else if (validation[input.name] && validation[input.name](input)) {
-      // Если проверка не прошла
-      // Добавляем класс "err"
       input.classList.add("err");
-      // Устанавливаем флаг в true
       emptyErr = true;
-      let errorElement = input.nextElementSibling;
-      if (!errorElement || !errorElement.classList.contains("error-message")) {
-        errorElement = document.createElement("div");
-        errorElement.classList.add("error-message");
-        input.parentNode.insertBefore(errorElement, input.nextSibling);
-      }
-      errorElement.textContent = errorMessages[input.name];
-    } else {
-      // Иначе удаляем класс "err"
-      input.classList.remove("err");
-      // Удаляем элемент с ошибкой, если он есть
-      let errorElement = e.target.nextSibling;
+      let errorNextElement = input.nextElementSibling;
       if (
-        errorElement &&
-        errorElement.classList &&
-        errorElement.classList.contains("error-message")
+        !errorNextElement ||
+        !errorNextElement.classList.contains("error-message")
       ) {
-        errorElement.remove();
+        errorNextElement = document.createElement("div");
+        errorNextElement.classList.add("error-message");
+        input.parentNode.insertBefore(errorNextElement, input.nextSibling);
+      }
+      errorNextElement.textContent = errorMessages[input.name];
+    } else {
+      input.classList.remove("err");
+      let errorNextSibling = e.target.nextSibling;
+      if (
+        errorNextSibling &&
+        errorNextSibling.classList &&
+        errorNextSibling.classList.contains("error-message")
+      ) {
+        errorNextSibling.remove();
       }
     }
   });
 
   if (emptyErr) {
-    // Отменяем отправку формы
     e.preventDefault();
   }
 
   form.addEventListener("focusin", function (e) {
-    if (e.target.classList.contains("check")) {
+    if (e.target.classList.contains("check-error")) {
       e.target.classList.remove("err");
-      let errorElement = e.target.nextElementSibling;
+      let errorNextInput = e.target.nextElementSibling;
       if (
-        errorElement &&
-        errorElement.classList &&
-        errorElement.classList.contains("error-message")
+        errorNextInput &&
+        errorNextInput.classList &&
+        errorNextInput.classList.contains("error-message")
       ) {
-        errorElement.remove();
+        errorNextInput.remove();
       }
     }
   });
