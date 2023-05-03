@@ -1,0 +1,31 @@
+html,
+body {
+  margin: 0;
+  background: rgba(0, 19, 127, 0.391);
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgb(0, 48, 19);
+  color: rgb(255, 255, 255);
+  height: 50px;
+  width: 100%;
+}
+
+.menu a {
+  color: inherit;
+  line-height: 50px;
+  font-size: 20px;
+  margin: 0 10px;
+  transition: color 0.4s;
+}
+
+.menu .menu__link-active {
+  color: rgb(255, 255, 0);
+}
+
+.content {
+  margin-top: 70px;
+}
