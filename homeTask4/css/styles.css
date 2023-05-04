@@ -29,3 +29,21 @@ body {
 .content {
   margin-top: 70px;
 }
+
+.btnUp {
+  background: rgba(81, 255, 0, 0.5);
+  color: #fff;
+  line-height: 50px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  cursor: pointer;
+  display: none;
+}
+
+.btnUp-open {
+  display: block;
+}
