@@ -1,5 +1,6 @@
 window.addEventListener('load', function(){
 	let menu = document.querySelector('.menu');
+	let menuItems = menu.querySelectorAll('a');
 	let btnUp = document.querySelector('.btnUp');
 
 	delegate(menu, 'a', 'click', function(e){
@@ -7,25 +8,28 @@ window.addEventListener('load', function(){
 
 		let target = document.querySelector(this.hash);
 		scrollToElem(target);
-		setActiveMenuItem(menu, this);
 	});
-
-	let hash = window.location.hash;
-	let autoTarget = hash.length > 0 ? document.querySelector(hash) : null;
-
-	if(autoTarget !== null){
-		scrollToElem(autoTarget);
-		setActiveMenuItem(menu, menu.querySelector(`[href$="${hash}"]`));
-	}
 
 	btnUp.addEventListener('click', function(){
 		scrollToY(0);
 	});
 
 	document.addEventListener('scroll', function(){
+		let pos = window.scrollY;
+
 		let cl = btnUp.classList;
 		let threshold = window.innerHeight / 2;
-		window.scrollY > threshold ? cl.add('btnUp-open') : cl.remove('btnUp-open');
+		pos > threshold ? cl.add('btnUp-open') : cl.remove('btnUp-open');
+
+		for(let i = menuItems.length - 1; i >= 0; i--){
+			let link = menuItems[i];
+			let header = document.querySelector(link.hash);
+			
+			if(header.getBoundingClientRect().y < threshold){
+				setActiveMenuItem(menu, link);
+				break;
+			}
+		}
 	});
 });
 
